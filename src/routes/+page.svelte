@@ -1,8 +1,25 @@
 <script lang="ts" setup>
-	import { Gemstone, OrgPro, Rates } from '$lib/core';
+	import { Gemstone, OrgPro, Rates, levela, yina } from '$lib/core';
 	import type { Org, FireOrg, LeafOrg, ClstOrg, SandOrg, Levels, Result } from '$lib/core';
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	let score = 0;
+	let places: string[] = [];
+	interface LevelsString {
+		level_clst_1: string;
+		level_clst_2: string;
+		level_clst_3: string;
+		level_fire_1: string;
+		level_fire_2: string;
+		level_fire_3: string;
+		level_fire_4: string;
+		level_leaf_1: string;
+		level_leaf_2: string;
+		level_leaf_3: string;
+		level_sand_1: string;
+		level_sand_2: string;
+		level_sand_3: string;
+	}
 	let org: Org = {
 		count_clst: 0,
 		count_fire: 0,
@@ -24,19 +41,57 @@
 		level_sand_2: 0,
 		level_sand_3: 0
 	};
+	let output: OrgPro = new OrgPro(org);
+
+	let levelsString: LevelsString = {
+		level_clst_1: '0',
+		level_clst_2: '0',
+		level_clst_3: '0',
+		level_fire_1: '0',
+		level_fire_2: '0',
+		level_fire_3: '0',
+		level_fire_4: '0',
+		level_leaf_1: '0',
+		level_leaf_2: '0',
+		level_leaf_3: '0',
+		level_sand_1: '0',
+		level_sand_2: '0',
+		level_sand_3: '0'
+	};
 	let res: Result;
+	// levelsString转换为levels
+	function levelsString2levels() {
+		levels.level_clst_1 = parseInt(levelsString.level_clst_1);
+		levels.level_clst_2 = parseInt(levelsString.level_clst_2);
+		levels.level_clst_3 = parseInt(levelsString.level_clst_3);
+		levels.level_fire_1 = parseInt(levelsString.level_fire_1);
+		levels.level_fire_2 = parseInt(levelsString.level_fire_2);
+		levels.level_fire_3 = parseInt(levelsString.level_fire_3);
+		levels.level_fire_4 = parseInt(levelsString.level_fire_4);
+		levels.level_leaf_1 = parseInt(levelsString.level_leaf_1);
+		levels.level_leaf_2 = parseInt(levelsString.level_leaf_2);
+		levels.level_leaf_3 = parseInt(levelsString.level_leaf_3);
+		levels.level_sand_1 = parseInt(levelsString.level_sand_1);
+		levels.level_sand_2 = parseInt(levelsString.level_sand_2);
+		levels.level_sand_3 = parseInt(levelsString.level_sand_3);
+	}
 	function judge_here() {
 		// 传入原料数量和工艺等级，返回最优排列,
+		levelsString2levels();
 		let gemstone: Gemstone = new Gemstone(org, levels);
 		res = gemstone.judge();
+		score = res.score;
+		places = res.place;
+		output = res.output;
 		console.log(res);
 	}
 	function To_up() {
 		// levels里的所有值都变成3
-		for (let key in levels) {
-			levels[key] = 3;
+		for (let key in levelsString) {
+			levelsString[key] = '3';
 		}
 	}
+
 	onMount(() => {
 		// 挂载之前附一次值,防止刷新后数据丢失
 		org = {
@@ -45,12 +100,52 @@
 			count_leaf: 0,
 			count_sand: 0
 		};
+		levels = {
+			level_clst_1: 0,
+			level_clst_2: 0,
+			level_clst_3: 0,
+			level_fire_1: 0,
+			level_fire_2: 0,
+			level_fire_3: 0,
+			level_fire_4: 0,
+			level_leaf_1: 0,
+			level_leaf_2: 0,
+			level_leaf_3: 0,
+			level_sand_1: 0,
+			level_sand_2: 0,
+			level_sand_3: 0
+		};
+		levelsString = {
+			level_clst_1: '0',
+			level_clst_2: '0',
+			level_clst_3: '0',
+			level_fire_1: '0',
+			level_fire_2: '0',
+			level_fire_3: '0',
+			level_fire_4: '0',
+			level_leaf_1: '0',
+			level_leaf_2: '0',
+			level_leaf_3: '0',
+			level_sand_1: '0',
+			level_sand_2: '0',
+			level_sand_3: '0'
+		};
 	});
 </script>
 
 <div class="root">
 	<!-- <head></head> -->
-	<div class="head">ArkGemstone</div>
+	<div class="head">
+		<p>ArkGemstone</p>
+		<div class="sponsor">
+			如果你觉得本网页有用，请在
+			<a href="https://github.com/sevmeowple/ArkGemstone" target="_blank">
+				<img src={`${base}/assets/github.png`} alt="GitHub" class="github-icon" />
+			</a>
+			上给我们一个Star！
+		</div>
+	</div>
+
 	<main>
 		<div class="part1">
 			<div class="box1">
@@ -102,7 +197,7 @@
 				<div class="craft-container">
 					<div class="craft-section">
 						<label class="label">
-							<select class="select" bind:value={levels.level_fire_1}>
+							<select class="select" bind:value={levelsString.level_fire_1}>
 								<option value="0">没有淬雕 I</option>
 								<option value="1">初级淬雕 I</option>
 								<option value="2">中级淬雕 I</option>
@@ -110,7 +205,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_fire_2}>
+							<select class="select" bind:value={levelsString.level_fire_2}>
 								<option value="0">没有淬雕 II</option>
 								<option value="1">初级淬雕 II</option>
 								<option value="2">中级淬雕 II</option>
@@ -118,7 +213,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_fire_3}>
+							<select class="select" bind:value={levelsString.level_fire_3}>
 								<option value="0">没有淬雕 III</option>
 								<option value="1">初级淬雕 III</option>
 								<option value="2">中级淬雕 III</option>
@@ -126,7 +221,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_fire_4}>
+							<select class="select" bind:value={levelsString.level_fire_4}>
 								<option value="0">没有淬雕 IV</option>
 								<option value="1">初级淬雕 IV</option>
 								<option value="2">中级淬雕 IV</option>
@@ -136,7 +231,7 @@
 					</div>
 					<div class="craft-section">
 						<label class="label">
-							<select class="select" bind:value={levels.level_leaf_1}>
+							<select class="select" bind:value={levelsString.level_leaf_1}>
 								<option value="0">没有滤纯 I</option>
 								<option value="1">初级滤纯 I</option>
 								<option value="2">中级滤纯 I</option>
@@ -144,7 +239,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_leaf_2}>
+							<select class="select" bind:value={levelsString.level_leaf_2}>
 								<option value="0">没有滤纯 II</option>
 								<option value="1">初级滤纯 II</option>
 								<option value="2">中级滤纯 II</option>
@@ -152,7 +247,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_leaf_3}>
+							<select class="select" bind:value={levelsString.level_leaf_3}>
 								<option value="0">没有滤纯 III</option>
 								<option value="1">初级滤纯 III</option>
 								<option value="2">中级滤纯 III</option>
@@ -162,7 +257,7 @@
 					</div>
 					<div class="craft-section">
 						<label class="label">
-							<select class="select" bind:value={levels.level_clst_1}>
+							<select class="select" bind:value={levelsString.level_clst_1}>
 								<option value="0">没有交糅 I</option>
 								<option value="1">初级交糅 I</option>
 								<option value="2">中级交糅 I</option>
@@ -170,7 +265,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_clst_2}>
+							<select class="select" bind:value={levelsString.level_clst_2}>
 								<option value="0">没有交糅 II</option>
 								<option value="1">初级交糅 II</option>
 								<option value="2">中级交糅 II</option>
@@ -178,7 +273,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_clst_3}>
+							<select class="select" bind:value={levelsString.level_clst_3}>
 								<option value="0">没有交糅 III</option>
 								<option value="1">初级交糅 III</option>
 								<option value="2">中级交糅 III</option>
@@ -188,7 +283,7 @@
 					</div>
 					<div class="craft-section">
 						<label class="label">
-							<select class="select" bind:value={levels.level_sand_1}>
+							<select class="select" bind:value={levelsString.level_sand_1}>
 								<option value="0">没有落晶 I</option>
 								<option value="1">初级落晶 I</option>
 								<option value="2">中级落晶 I</option>
@@ -196,7 +291,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_sand_2}>
+							<select class="select" bind:value={levelsString.level_sand_2}>
 								<option value="0">没有落晶 II</option>
 								<option value="1">初级落晶 II</option>
 								<option value="2">中级落晶 II</option>
@@ -204,7 +299,7 @@
 							</select>
 						</label>
 						<label class="label">
-							<select class="select" bind:value={levels.level_sand_3}>
+							<select class="select" bind:value={levelsString.level_sand_3}>
 								<option value="0">没有落晶 III</option>
 								<option value="1">初级落晶 III</option>
 								<option value="2">中级落晶 III</option>
@@ -216,19 +311,55 @@
 			</div>
 		</div>
 		<div class="part2">
+			<div class="notice">
+				<p>1. 本网页默认可以填满6个位置，如果填不满得到结果不保证</p>
+				<p>2. 如果得到的最优排列超出6个，说明你的几个淬雕里有不占用铭刻位置的升级，是正常现象</p>
+				<p>
+					3. 如果出现了直觉这种排列有问题，可以先自己验算一遍，因为有的排列顺序颠倒分数还是一样的
+				</p>
+			</div>
 			<div class="score">
 				<div class="score-title">最优排列分数</div>
 				<div class="score-number">{score}</div>
 			</div>
-			<div class="title_part2">
-				<!-- 显示对应levels里的索引 -->
-				<div class="title">最优排列</div>
-				<!-- {#each Object.keys(res) as key}
-					<div class="title">{'第' + key + '种'}</div>
-					<div class="level">{levels[res[key]]}</div>
-				{/each} -->
+			<div class="content">
+				<div class="title_part2">
+					<div class="title">最优排列</div>
+					<!-- 循环显示place -->
+					{#each places as place}
+						<div class="level">{levela[place]}</div>
+					{/each}
+				</div>
+				<div class="output">
+					<div class="title">产物信息</div>
+					<!-- 显示FireOrg -->
+					{#each Object.entries(output.Fire) as [key, value]}
+						{#if value !== 0}
+							<div class="output-item">{yina[key]}: {value}</div>
+						{/if}
+					{/each}
+					<!-- 显示LeafOrg -->
+					{#each Object.entries(output.Leaf) as [key, value]}
+						{#if value !== 0}
+							<div class="output-item">{yina[key]}: {value}</div>
+						{/if}
+					{/each}
+					<!-- 显示ClstOrg -->
+					{#each Object.entries(output.Clst) as [key, value]}
+						{#if value !== 0}
+							<div class="output-item">{yina[key]}: {value}</div>
+						{/if}
+					{/each}
+					<!-- 显示SandOrg -->
+					{#each Object.entries(output.Sand) as [key, value]}
+						{#if value !== 0}
+							<div class="output-item">{yina[key]}: {value}</div>
+						{/if}
+					{/each}
+				</div>
 			</div>
 		</div>
+
 		<div class="button-container">
 			<button on:click={judge_here}>计算</button>
 			<button on:click={To_up}>一键高级</button>
@@ -253,6 +384,39 @@
 		font-size: 35px;
 		text-align: center;
 		color: #5c422b;
+	}
+
+	.head p {
+		margin: 0;
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: #333;
+	}
+
+	.sponsor {
+		font-size: 1rem;
+		color: #666;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.sponsor a {
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
+		color: #53ffbd;
+	}
+
+	.github-icon {
+		width: 20px;
+		height: 20px;
+		margin-left: 5px;
+		vertical-align: middle;
+		transition: filter 0.3s ease;
+	}
+
+	.sponsor a:hover .github-icon {
+		filter: drop-shadow(0 0 5px #53ffbd);
 	}
 
 	main {
@@ -380,11 +544,27 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		/* background-color: #e0d4c7; */
 		padding: 20px;
 		box-sizing: border-box;
 		border-radius: 10px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.notice {
+		background-color: #f0e4d7;
+		padding: 10px;
+		border-radius: 10px;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		margin-bottom: 20px;
+		text-align: left;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.notice p {
+		font-size: 16px;
+		color: #5c422b;
+		margin: 5px 0;
 	}
 
 	.score {
@@ -411,6 +591,11 @@
 		margin-top: 5px;
 	}
 
+	.content {
+		display: flex;
+		width: 100%;
+	}
+
 	.title_part2 {
 		display: flex;
 		flex-direction: column;
@@ -420,8 +605,9 @@
 		padding: 20px;
 		border-radius: 10px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		width: 100%;
+		width: 50%;
 		box-sizing: border-box;
+		margin-right: 10px;
 	}
 
 	.title {
@@ -431,13 +617,30 @@
 		margin-bottom: 10px;
 	}
 
-	.title_part2 .title:last-child {
-		margin-bottom: 0; /* 去掉最后一个标题的下间距 */
-	}
 	.level {
 		font-size: 20px;
 		color: #5c422b;
 	}
+
+	.output {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-color: #f0e4d7;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		width: 50%;
+		box-sizing: border-box;
+	}
+
+	.output-item {
+		font-size: 20px;
+		color: #5c422b;
+		margin: 5px 0;
+	}
+
 	.button-container {
 		position: absolute;
 		bottom: 20px;

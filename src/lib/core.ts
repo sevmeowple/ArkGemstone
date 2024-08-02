@@ -102,7 +102,7 @@ interface Levels {
 interface Result {
     "score": number,
     "place": string[],
-    "output": string[],
+    "output": OrgPro,
 }
 
 class Gemstone {
@@ -640,21 +640,89 @@ class Gemstone {
         // 遍历所有的place策略
         let maxscore = 0;
         let maxplace: string[] = [];
+        let maxorgpro: OrgPro = new OrgPro(this.org);
         this.places.forEach(place => {
             const score = this.scoreonce(place);
             if (score > maxscore) {
                 maxscore = score;
                 maxplace = place;
+                maxorgpro = this.orgpro;
             }
             this.reset();
         })
         return {
             "score": maxscore,
-            "place":maxplace,
-            "output": []
+            "place": maxplace,
+            "output": maxorgpro
         }
     }
 }
+
+const levela = {
+    "level_fire_1": "淬雕 I",
+    "level_fire_2": "淬雕 II",
+    "level_fire_3": "淬雕 III",
+    "level_fire_4": "淬雕 IV",
+    "level_leaf_1": "滤纯 I",
+    "level_leaf_2": "滤纯 II",
+    "level_leaf_3": "滤纯 III",
+    "level_clst_1": "交糅 I",
+    "level_clst_2": "交糅 II",
+    "level_clst_3": "交糅 III",
+    "level_sand_1": "落晶 I",
+    "level_sand_2": "落晶 II",
+    "level_sand_3": "落晶 III",
+}
+// interface Org {
+//     "count_fire": number,
+//     "count_clst": number,
+//     "count_leaf": number,
+//     "count_sand": number,
+// }
+
+// interface FireOrg {
+//     "count_fire": number,
+//     "count_fire_1": number,
+//     "count_fire_2": number,
+//     "count_fire_3": number,
+//     "count_fire_4": number,
+// }
+
+// interface LeafOrg {
+//     "count_leaf": number,
+//     "count_leaf_1": number,
+//     "count_leaf_2": number,
+//     "count_leaf_3": number,
+// }
+
+// interface ClstOrg {
+//     "count_clst": number,
+//     "count_clst_1": number,
+//     "count_clst_2": number,
+//     "count_clst_3": number,
+// }
+
+// interface SandOrg {
+//     "count_sand": number,
+// }
+const yina = {
+    "count_fire": "火焰伊纳",
+    "count_clst": "天空伊纳",
+    "count_leaf": "草叶伊纳",
+    "count_sand": "沙伊纳",
+    "count_fire_1": "火焰伊纳 I",
+    "count_fire_2": "火焰伊纳 II",
+    "count_fire_3": "火焰伊纳 III",
+    "count_fire_4": "火焰伊纳 IV",
+    "count_leaf_1": "草叶伊纳 I",
+    "count_leaf_2": "草叶伊纳 II",
+    "count_leaf_3": "草叶伊纳 III",
+    "count_clst_1": "天空伊纳 I",
+    "count_clst_2": "天空伊纳 II",
+    "count_clst_3": "天空伊纳 III",
+}
+
+
 // class导出
-export { Gemstone, OrgPro, Rates }
+export { Gemstone, OrgPro, Rates, levela, yina }
 export type { Org, FireOrg, LeafOrg, ClstOrg, SandOrg, Levels, Result }
