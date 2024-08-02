@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
+/* eslint-disable no-case-declarations */
 interface Org {
     "count_fire": number,
     "count_clst": number,
@@ -99,12 +101,7 @@ interface Levels {
 
 interface Result {
     "score": number,
-    "place_1": string,
-    "place_2": string,
-    "place_3": string,
-    "place_4": string,
-    "place_5": string,
-    "place_6": string,
+    "place": string[],
     "output": string[],
 }
 
@@ -256,7 +253,7 @@ class Gemstone {
                 // 这里按额外产出一倍即10=> 8 and 4
                 case 3:
                     this.orgpro.Leaf.count_leaf_2 += this.orgpro.Leaf.count_leaf_1 * 0.8;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_1 * 0.4;
+                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_1 * 1.2;
                     this.orgpro.Leaf.count_leaf_1 = 0;
                     break;
                 default:
@@ -283,7 +280,7 @@ class Gemstone {
                 // 额外产出一倍sand
                 case 3:
                     this.orgpro.Leaf.count_leaf_3 += this.orgpro.Leaf.count_leaf_2 * 0.7;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_2 * 0.6;
+                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_2 * 1.3;
                     this.orgpro.Leaf.count_leaf_2 = 0;
                     break;
                 default:
@@ -296,7 +293,7 @@ class Gemstone {
                 // 1and1 =>1
                 // 计算clst和sand最小的一个
                 case 1:
-                    let min = Math.min(this.orgpro.Clst.count_clst, this.orgpro.Sand.count_sand);
+                    const min = Math.min(this.orgpro.Clst.count_clst, this.orgpro.Sand.count_sand);
                     this.orgpro.Clst.count_clst_1 += min;
                     this.orgpro.Sand.count_sand -= min;
                     this.orgpro.Clst.count_clst -= min;
@@ -304,14 +301,14 @@ class Gemstone {
                 // 均分即res = sand and clst / 2
                 // 均分后沙子和矿石都消失
                 case 2:
-                    let res = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
+                    const res = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
                     this.orgpro.Clst.count_clst_1 += res;
                     this.orgpro.Sand.count_sand = 0;
                     this.orgpro.Clst.count_clst = 0;
                     break;
                 // 所有天空宝石分数增加5
                 case 3:
-                    let res1 = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
+                    const res1 = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
                     this.orgpro.Clst.count_clst_1 += res1;
                     this.orgpro.Sand.count_sand = 0;
                     this.orgpro.Clst.count_clst = 0;
@@ -327,14 +324,14 @@ class Gemstone {
         "level_clst_2": () => {
             switch (this.levels.level_clst_2) {
                 case 1:
-                    let min = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
+                    const min = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
                     this.orgpro.Clst.count_clst_2 += min;
                     this.orgpro.Sand.count_sand -= min;
                     this.orgpro.Clst.count_clst_1 -= min;
                     break;
                 // 加15分
                 case 2:
-                    let min1 = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
+                    const min1 = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
                     this.orgpro.Clst.count_clst_2 += min1;
                     this.orgpro.Sand.count_sand -= min1;
                     this.orgpro.Clst.count_clst_1 -= min1;
@@ -344,7 +341,7 @@ class Gemstone {
                     break;
                 // 均分+15分
                 case 3:
-                    let res = (this.orgpro.Clst.count_clst_1 + this.orgpro.Sand.count_sand) / 2;
+                    const res = (this.orgpro.Clst.count_clst_1 + this.orgpro.Sand.count_sand) / 2;
                     this.orgpro.Clst.count_clst_2 += res;
                     this.orgpro.Sand.count_sand = 0;
                     this.orgpro.Clst.count_clst_1 = 0;
@@ -361,14 +358,14 @@ class Gemstone {
             switch (this.levels.level_clst_3) {
                 // 天空2和火焰3合成天空3
                 case 1:
-                    let min = Math.min(this.orgpro.Clst.count_clst_2, this.orgpro.Fire.count_fire_3);
+                    const min = Math.min(this.orgpro.Clst.count_clst_2, this.orgpro.Fire.count_fire_3);
                     this.orgpro.Clst.count_clst_3 += min;
                     this.orgpro.Clst.count_clst_2 -= min;
                     this.orgpro.Fire.count_fire_3 -= min;
                     break;
                 // 均分
                 case 2:
-                    let res = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
+                    const res = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
                     this.orgpro.Clst.count_clst_3 += res;
                     this.orgpro.Clst.count_clst_2 = 0;
                     this.orgpro.Fire.count_fire_3 = 0;
@@ -376,7 +373,7 @@ class Gemstone {
                 // 若刻印产出只有1种宝石，额外获得<天空伊纳 III>数量100倍的评价分数
                 // 在最后计算分数时处理
                 case 3:
-                    let res1 = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
+                    const res1 = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
                     this.orgpro.Clst.count_clst_3 += res1;
                     this.orgpro.Clst.count_clst_2 = 0;
                     this.orgpro.Fire.count_fire_3 = 0;
@@ -525,7 +522,7 @@ class Gemstone {
         // 1500score per 空place ,在最后计算分数时处理
         // 检查places上和6相比是否有空place
         // 其中与生成函数的处理相同如果level_fire_1 >= 2则不占位置
-        let count = this.checkPlace(place);
+        const count = this.checkPlace(place);
         // score += count * 1500;
         switch (this.levels.level_fire_4) {
             case 1:
@@ -535,6 +532,8 @@ class Gemstone {
                 break;
             case 3:
                 score += count * 5000;
+                break;
+            case 0:
                 break;
             default:
                 console.error("In calculateScore error: level_fire_4", this.levels.level_fire_4, " is not a valid value");
@@ -566,12 +565,12 @@ class Gemstone {
     }
     // 所有的place策略生成
     generatekeys(levels: Levels): string[][] {
-        let keys: string[][] = [];
-        let fire = ["level_fire_1", "level_fire_2", "level_fire_3", "level_fire_4"];
-        let leaf = ["level_leaf_1", "level_leaf_2", "level_leaf_3"];
-        let clst = ["level_clst_1", "level_clst_2", "level_clst_3"];
-        let sand = ["level_sand_1", "level_sand_2", "level_sand_3"];
-        let others = ["level2", "level3"];
+        const keys: string[][] = [];
+        const fire = ["level_fire_1", "level_fire_2", "level_fire_3", "level_fire_4"];
+        const leaf = ["level_leaf_1", "level_leaf_2", "level_leaf_3"];
+        const clst = ["level_clst_1", "level_clst_2", "level_clst_3"];
+        const sand = ["level_sand_1", "level_sand_2", "level_sand_3"];
+        const others = ["level2", "level3"];
 
         let allElements = [...fire, ...leaf, ...clst, ...sand, ...others];
 
@@ -579,7 +578,7 @@ class Gemstone {
         allElements = allElements.filter(element => levels[element] !== 0);
 
         // 如果 level_fire_1, level_fire_2, level_fire_3 的值大于等于 2，则从 allElements 中移除
-        let prependElements: string[] = [];
+        const prependElements: string[] = [];
         if (levels.level_fire_1 >= 2) {
             allElements = allElements.filter(element => element !== "level_fire_1");
             prependElements.push("level_fire_1");
@@ -642,7 +641,7 @@ class Gemstone {
         let maxscore = 0;
         let maxplace: string[] = [];
         this.places.forEach(place => {
-            let score = this.scoreonce(place);
+            const score = this.scoreonce(place);
             if (score > maxscore) {
                 maxscore = score;
                 maxplace = place;
@@ -651,12 +650,7 @@ class Gemstone {
         })
         return {
             "score": maxscore,
-            "place_1": maxplace[0],
-            "place_2": maxplace[1],
-            "place_3": maxplace[2],
-            "place_4": maxplace[3],
-            "place_5": maxplace[4],
-            "place_6": maxplace[5],
+            "place":maxplace,
             "output": []
         }
     }
