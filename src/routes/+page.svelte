@@ -345,29 +345,77 @@
 				<div class="output">
 					<div class="title">产物信息</div>
 					<!-- 显示FireOrg -->
-					{#each Object.entries(output.Fire) as [key, value]}
+					<!-- {#each Object.entries(output.Fire) as [key, value]}
 						{#if value !== 0}
-							<div class="output-item">{yina[key]}: {value}</div>
+							<div class="output-item">
+								<img src={`${base}/assets/${key}.png`} alt={yina[key]} />: {value}
+							</div>
 						{/if}
-					{/each}
-					<!-- 显示LeafOrg -->
-					{#each Object.entries(output.Leaf) as [key, value]}
+					{/each} -->
+					<ul class="list">
+						{#each Object.entries(output.Fire) as [key, value]}
+							{#if value !== 0}
+								<li class="output-item">
+									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
+									  <span>{value.toFixed(2)}</span>
+								</li>
+							{/if}
+						{/each}
+
+						<!-- 显示LeafOrg -->
+						<!-- {#each Object.entries(output.Leaf) as [key, value]}
 						{#if value !== 0}
-							<div class="output-item">{yina[key]}: {value}</div>
+							<div class="output-item">
+								<img src={`${base}/assets/${key}.png`} alt={yina[key]} />: {value}
+							</div>
 						{/if}
-					{/each}
-					<!-- 显示ClstOrg -->
-					{#each Object.entries(output.Clst) as [key, value]}
+					{/each} -->
+
+						{#each Object.entries(output.Leaf) as [key, value]}
+							{#if value !== 0}
+								<li class="output-item">
+									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
+									  <span>{value.toFixed(2)}</span>
+								</li>
+							{/if}
+						{/each}
+
+						<!-- 显示ClstOrg -->
+						<!-- {#each Object.entries(output.Clst) as [key, value]}
 						{#if value !== 0}
-							<div class="output-item">{yina[key]}: {value}</div>
+							<div class="output-item">
+								<img src={`${base}/assets/${key}.png`} alt={yina[key]} />: {value}
+							</div>
 						{/if}
-					{/each}
-					<!-- 显示SandOrg -->
-					{#each Object.entries(output.Sand) as [key, value]}
+					{/each} -->
+
+						{#each Object.entries(output.Clst) as [key, value]}
+							{#if value !== 0}
+								<li class="output-item">
+									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
+									  <span>{value.toFixed(2)}</span>
+								</li>
+							{/if}
+						{/each}
+
+						<!-- 显示SandOrg -->
+						<!-- {#each Object.entries(output.Sand) as [key, value]}
 						{#if value !== 0}
-							<div class="output-item">{yina[key]}: {value}</div>
+							<div class="output-item">
+								<img src={`${base}/assets/${key}.png`} alt={yina[key]} />: {value}
+							</div>
 						{/if}
-					{/each}
+					{/each} -->
+
+						{#each Object.entries(output.Sand) as [key, value]}
+							{#if value !== 0}
+								<li class="output-item">
+									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
+									  <span>{value.toFixed(2)}</span>
+								</li>
+							{/if}
+						{/each}
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -649,8 +697,36 @@
 
 	.output-item {
 		font-size: 20px;
-		color: #5c422b;
-		margin: 5px 0;
+		color: #5c422b; /* 沙漠棕色 */
+		margin: 10px 0;
+		border: 1px solid #d4a373; /* 沙色边框 */
+		border-radius: 8px;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		background-color: #f4e7d3; /* 沙色背景 */
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	.output-item:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	}
+
+	.output-item img {
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		border: 1px solid #ddd;
+	}
+
+	.output-item span:last-child {
+		font-weight: bold;
+		margin-left: auto;
 	}
 
 	.button-container {
