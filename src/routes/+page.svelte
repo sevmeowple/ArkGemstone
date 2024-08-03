@@ -5,6 +5,7 @@
 	import { base } from '$app/paths';
 	let score = 0;
 	let places: string[] = [];
+	let placeLength = 6;
 	interface LevelsString {
 		level_clst_1: string;
 		level_clst_2: string;
@@ -78,7 +79,7 @@
 	function judge_here() {
 		// 传入原料数量和工艺等级，返回最优排列,
 		levelsString2levels();
-		let gemstone: Gemstone = new Gemstone(org, levels);
+		let gemstone: Gemstone = new Gemstone(org, levels, placeLength);
 		res = gemstone.judge();
 		score = res.score;
 		places = res.place;
@@ -307,15 +308,26 @@
 							</select>
 						</label>
 					</div>
+					<div class="craft-section">
+						<label class="label">
+							<span>操作台可工作流槽位</span>
+							<select class="select" bind:value={placeLength}>
+								{#each Array(7)
+									.fill(0)
+									.map((_, i) => i) as index}
+									<option value={index}>{index}</option>
+								{/each}
+							</select>
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="part2">
 			<div class="notice">
-				<p>1. 本网页默认可以填满6个位置，如果填不满得到结果不保证</p>
-				<p>2. 如果得到的最优排列超出6个，说明你的几个淬雕里有不占用铭刻位置的升级，是正常现象</p>
+				<p>1. 如果得到的最优排列超出6个，说明你的几个淬雕里有不占用铭刻位置的升级，是正常现象</p>
 				<p>
-					3. 如果出现了直觉这种排列有问题，可以先自己验算一遍，因为有的排列顺序颠倒分数还是一样的
+					2. 如果出现了直觉这种排列有问题，可以先自己验算一遍，因为有的排列顺序颠倒分数还是一样的
 				</p>
 			</div>
 			<div class="score">

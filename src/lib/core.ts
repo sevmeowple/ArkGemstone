@@ -111,12 +111,14 @@ class Gemstone {
     levels: Levels;
     rates: Rates;
     places: string[][] = [];
-    constructor(org: Org, levels: Levels) {
+    placeLength: number = 6;
+    constructor(org: Org, levels: Levels, placeLength: number = 6) {
         this.orgpro = new OrgPro(org);
         this.org = org;
         this.levels = levels;
         this.rates = new Rates();
-        this.places = this.generatekeys(levels);
+        this.places = this.generatekeys(levels, placeLength);
+        this.placeLength = placeLength;
     }
 
 
@@ -466,7 +468,7 @@ class Gemstone {
                     break;
             }
         })
-        count = 6 - count;
+        count = this.placeLength - count;
         if (count < 0) console.error("error: count < 0");
         return count;
     }
@@ -556,15 +558,16 @@ class Gemstone {
         // this.places = this.generatekeys(this.levels);
     }
     // 重新构建
-    rebuild(org: Org, levels: Levels) {
+    rebuild(org: Org, levels: Levels, placeLength: number = 6) {
         this.orgpro = new OrgPro(org);
         this.org = org;
         this.levels = levels;
         this.rates = new Rates();
-        this.places = this.generatekeys(levels);
+        this.places = this.generatekeys(levels, placeLength);
+        this.placeLength = placeLength;
     }
     // 所有的place策略生成
-    generatekeys(levels: Levels): string[][] {
+    generatekeys(levels: Levels, placeLength: number): string[][] {
         const keys: string[][] = [];
         const fire = ["level_fire_1", "level_fire_2", "level_fire_3", "level_fire_4"];
         const leaf = ["level_leaf_1", "level_leaf_2", "level_leaf_3"];
@@ -593,7 +596,7 @@ class Gemstone {
         }
 
         function generateCombinations(elements: string[], current: string[]) {
-            if (current.length === 6) {
+            if (current.length === placeLength) {
                 if (prependElements.length > 0) {
                     keys.push([...prependElements, ...current]);
                 } else {
@@ -673,38 +676,6 @@ const levela = {
     "level_sand_2": "落晶 II",
     "level_sand_3": "落晶 III",
 }
-// interface Org {
-//     "count_fire": number,
-//     "count_clst": number,
-//     "count_leaf": number,
-//     "count_sand": number,
-// }
-
-// interface FireOrg {
-//     "count_fire": number,
-//     "count_fire_1": number,
-//     "count_fire_2": number,
-//     "count_fire_3": number,
-//     "count_fire_4": number,
-// }
-
-// interface LeafOrg {
-//     "count_leaf": number,
-//     "count_leaf_1": number,
-//     "count_leaf_2": number,
-//     "count_leaf_3": number,
-// }
-
-// interface ClstOrg {
-//     "count_clst": number,
-//     "count_clst_1": number,
-//     "count_clst_2": number,
-//     "count_clst_3": number,
-// }
-
-// interface SandOrg {
-//     "count_sand": number,
-// }
 const yina = {
     "count_fire": "火焰伊纳",
     "count_clst": "天空伊纳",
