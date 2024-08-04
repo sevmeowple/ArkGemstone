@@ -326,16 +326,16 @@ class Gemstone {
         "level_clst_2": () => {
             switch (this.levels.level_clst_2) {
                 case 1:
-                    const min = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
+                    const min = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Leaf.count_leaf_1);
                     this.orgpro.Clst.count_clst_2 += min;
-                    this.orgpro.Sand.count_sand -= min;
+                    this.orgpro.Leaf.count_leaf_1 -= min;
                     this.orgpro.Clst.count_clst_1 -= min;
                     break;
                 // 加15分
                 case 2:
-                    const min1 = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Sand.count_sand);
+                    const min1 = Math.min(this.orgpro.Clst.count_clst_1, this.orgpro.Leaf.count_leaf_1);
                     this.orgpro.Clst.count_clst_2 += min1;
-                    this.orgpro.Sand.count_sand -= min1;
+                    this.orgpro.Leaf.count_leaf_1 -= min1;
                     this.orgpro.Clst.count_clst_1 -= min1;
                     this.rates.clst.forEach((rate, index) => {
                         this.rates.clst[index] += 15;
@@ -343,9 +343,9 @@ class Gemstone {
                     break;
                 // 均分+15分
                 case 3:
-                    const res = (this.orgpro.Clst.count_clst_1 + this.orgpro.Sand.count_sand) / 2;
+                    const res = (this.orgpro.Clst.count_clst_1 + this.orgpro.Leaf.count_leaf_1) / 2;
                     this.orgpro.Clst.count_clst_2 += res;
-                    this.orgpro.Sand.count_sand = 0;
+                    this.orgpro.Leaf.count_leaf_1 = 0;
                     this.orgpro.Clst.count_clst_1 = 0;
                     this.rates.clst.forEach((rate, index) => {
                         this.rates.clst[index] += 15;
