@@ -175,12 +175,12 @@ class Gemstone {
                     break;
                 // 2.4倍
                 case 2:
-                    this.orgpro.Fire.count_fire_3 += this.orgpro.Fire.count_fire_2 * 2.4;
+                    this.orgpro.Fire.count_fire_3 += Math.floor(this.orgpro.Fire.count_fire_2 * 2.4);
                     this.orgpro.Fire.count_fire_2 = 0;
                     break;
                 // 额外place效果已在generatekeys中处理
                 case 3:
-                    this.orgpro.Fire.count_fire_3 += this.orgpro.Fire.count_fire_2 * 2.4;
+                    this.orgpro.Fire.count_fire_3 += Math.floor(this.orgpro.Fire.count_fire_2 * 2.4);
                     this.orgpro.Fire.count_fire_2 = 0;
                     break;
                 default:
