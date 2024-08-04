@@ -214,14 +214,14 @@ class Gemstone {
         "level_leaf_1": () => {
             switch (this.levels.level_leaf_1) {
                 case 1:
-                    this.orgpro.Leaf.count_leaf_1 += this.orgpro.Leaf.count_leaf / 2;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf / 2;
+                    this.orgpro.Leaf.count_leaf_1 += Math.ceil(this.orgpro.Leaf.count_leaf / 2);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf / 2);
                     this.orgpro.Leaf.count_leaf = 0;
                     break;
                 // 10 = > 8 and 2
                 case 2:
-                    this.orgpro.Leaf.count_leaf_1 += this.orgpro.Leaf.count_leaf * 0.8;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf * 0.2;
+                    this.orgpro.Leaf.count_leaf_1 += Math.ceil(this.orgpro.Leaf.count_leaf * 0.8);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf * 0.2);
                     this.orgpro.Leaf.count_leaf = 0;
                     break;
                 // 10 = > 10 and 0
@@ -241,21 +241,22 @@ class Gemstone {
             switch (this.levels.level_leaf_2) {
                 // 10=>4 and 6
                 case 1:
-                    this.orgpro.Leaf.count_leaf_2 += this.orgpro.Leaf.count_leaf_1 * 0.4;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_1 * 0.6;
+                    this.orgpro.Leaf.count_leaf_2 += Math.ceil(this.orgpro.Leaf.count_leaf_1 * 0.4);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_1 * 0.6);
                     this.orgpro.Leaf.count_leaf_1 = 0;
                     break;
                 // 10=> 6 and 4
                 case 2:
-                    this.orgpro.Leaf.count_leaf_2 += this.orgpro.Leaf.count_leaf_1 * 0.6;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_1 * 0.4;
+                    this.orgpro.Leaf.count_leaf_2 += Math.ceil(this.orgpro.Leaf.count_leaf_1 * 0.6);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_1 * 0.4);
                     this.orgpro.Leaf.count_leaf_1 = 0;
                     break;
                 // 10=> 8 and 2同时额外产出sand
                 // 这里按额外产出一倍即10=> 8 and 4
                 case 3:
-                    this.orgpro.Leaf.count_leaf_2 += this.orgpro.Leaf.count_leaf_1 * 0.8;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_1 * 1.2;
+                    this.orgpro.Leaf.count_leaf_2 += Math.ceil(this.orgpro.Leaf.count_leaf_1 * 0.8);
+                    // [额外产出相当于<草叶伊纳 Ⅲ>2倍的<沙伊纳>]
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_1 * 0.2) + this.orgpro.Leaf.count_leaf_2 * 2;
                     this.orgpro.Leaf.count_leaf_1 = 0;
                     break;
                 default:
@@ -268,21 +269,21 @@ class Gemstone {
             switch (this.levels.level_leaf_3) {
                 // 10=> 3 and 7
                 case 1:
-                    this.orgpro.Leaf.count_leaf_3 += this.orgpro.Leaf.count_leaf_2 * 0.3;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_2 * 0.7;
+                    this.orgpro.Leaf.count_leaf_3 += Math.ceil(this.orgpro.Leaf.count_leaf_2 * 0.3);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_2 * 0.7);
                     this.orgpro.Leaf.count_leaf_2 = 0;
                     break;
                 // 10=> 5 and 5
                 case 2:
-                    this.orgpro.Leaf.count_leaf_3 += this.orgpro.Leaf.count_leaf_2 * 0.5;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_2 * 0.5;
+                    this.orgpro.Leaf.count_leaf_3 += Math.ceil(this.orgpro.Leaf.count_leaf_2 * 0.5);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_2 * 0.5);
                     this.orgpro.Leaf.count_leaf_2 = 0;
                     break;
                 // 10=> 7 and 3
                 // 额外产出一倍sand
                 case 3:
-                    this.orgpro.Leaf.count_leaf_3 += this.orgpro.Leaf.count_leaf_2 * 0.7;
-                    this.orgpro.Sand.count_sand += this.orgpro.Leaf.count_leaf_2 * 1.3;
+                    this.orgpro.Leaf.count_leaf_3 += Math.ceil(this.orgpro.Leaf.count_leaf_2 * 0.7);
+                    this.orgpro.Sand.count_sand += Math.floor(this.orgpro.Leaf.count_leaf_2 * 0.3) + this.orgpro.Leaf.count_leaf_3;
                     this.orgpro.Leaf.count_leaf_2 = 0;
                     break;
                 default:
@@ -303,14 +304,14 @@ class Gemstone {
                 // 均分即res = sand and clst / 2
                 // 均分后沙子和矿石都消失
                 case 2:
-                    const res = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
+                    const res = Math.floor((this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2 + 0.5);
                     this.orgpro.Clst.count_clst_1 += res;
                     this.orgpro.Sand.count_sand = 0;
                     this.orgpro.Clst.count_clst = 0;
                     break;
                 // 所有天空宝石分数增加5
                 case 3:
-                    const res1 = (this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2;
+                    const res1 = Math.floor((this.orgpro.Clst.count_clst + this.orgpro.Sand.count_sand) / 2 + 0.5);
                     this.orgpro.Clst.count_clst_1 += res1;
                     this.orgpro.Sand.count_sand = 0;
                     this.orgpro.Clst.count_clst = 0;
@@ -343,7 +344,7 @@ class Gemstone {
                     break;
                 // 均分+15分
                 case 3:
-                    const res = (this.orgpro.Clst.count_clst_1 + this.orgpro.Leaf.count_leaf_1) / 2;
+                    const res = Math.floor((this.orgpro.Clst.count_clst_1 + this.orgpro.Leaf.count_leaf_1) / 2 + 0.5);
                     this.orgpro.Clst.count_clst_2 += res;
                     this.orgpro.Leaf.count_leaf_1 = 0;
                     this.orgpro.Clst.count_clst_1 = 0;
@@ -367,7 +368,7 @@ class Gemstone {
                     break;
                 // 均分
                 case 2:
-                    const res = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
+                    const res = Math.floor((this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2 + 0.5);
                     this.orgpro.Clst.count_clst_3 += res;
                     this.orgpro.Clst.count_clst_2 = 0;
                     this.orgpro.Fire.count_fire_3 = 0;
@@ -375,7 +376,7 @@ class Gemstone {
                 // 若刻印产出只有1种宝石，额外获得<天空伊纳 III>数量100倍的评价分数
                 // 在最后计算分数时处理
                 case 3:
-                    const res1 = (this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2;
+                    const res1 = Math.floor((this.orgpro.Clst.count_clst_2 + this.orgpro.Fire.count_fire_3) / 2 + 0.5);
                     this.orgpro.Clst.count_clst_3 += res1;
                     this.orgpro.Clst.count_clst_2 = 0;
                     this.orgpro.Fire.count_fire_3 = 0;
