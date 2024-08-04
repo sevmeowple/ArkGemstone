@@ -357,7 +357,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value.toFixed(2)}</span>
+									  <span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -375,7 +375,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value.toFixed(2)}</span>
+									  <span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -393,7 +393,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value.toFixed(2)}</span>
+									  <span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -411,7 +411,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value.toFixed(2)}</span>
+									  <span>{value}</span>
 								</li>
 							{/if}
 						{/each}
