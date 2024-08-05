@@ -339,7 +339,9 @@
 					<div class="title">最优排列</div>
 					<!-- 循环显示place -->
 					{#each places as place}
-						<div class="level">{levela[place]}</div>
+						{#if levela[place]}
+							<div class="level">{levela[place]}</div>
+						{/if}
 					{/each}
 				</div>
 				<div class="output">
@@ -357,7 +359,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value}</span>
+									<span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -375,7 +377,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value}</span>
+									<span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -393,7 +395,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value}</span>
+									<span>{value}</span>
 								</li>
 							{/if}
 						{/each}
@@ -411,7 +413,7 @@
 							{#if value !== 0}
 								<li class="output-item">
 									<span><img src={`${base}/assets/${key}.png`} alt={yina[key]} /> </span>
-									  <span>{value}</span>
+									<span>{value}</span>
 								</li>
 							{/if}
 						{/each}
